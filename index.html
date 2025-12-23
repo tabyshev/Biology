@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Микромир: Вирусы vs Бактерии | Биологическая игра</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+</head>
+<body>
+    <!-- Аудио элементы для звуков -->
+    <audio id="background-music" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-science-fiction-ambience-289.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="click-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correct-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="attack-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-laser-weapon-shot-1671.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="evolution-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-achievement-2527.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="win-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="lose-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Основной контейнер -->
+    <div class="container" id="main-container">
+        <!-- Фоновые элементы для космического эффекта -->
+        <div class="cosmic-bg">
+            <div class="stars-layer"></div>
+            <div class="stars-layer stars-layer-2"></div>
+            <div class="stars-layer stars-layer-3"></div>
+            <div class="nebula nebula-1"></div>
+            <div class="nebula nebula-2"></div>
+            <div class="particles-field" id="particles-field"></div>
+            <div class="energy-field" id="energy-field"></div>
+            <div class="microscopic-elements" id="microscopic-elements"></div>
+        </div>
+
+        <!-- Главное меню -->
+        <div class="screen active-screen" id="menu-screen">
+            <div class="menu-container">
+                <!-- Анимированный заголовок -->
+                <div class="title-container">
+                    <div class="main-title">
+                        <span class="title-char">М</span>
+                        <span class="title-char">И</span>
+                        <span class="title-char">К</span>
+                        <span class="title-char">Р</span>
+                        <span class="title-char">О</span>
+                        <span class="title-char">М</span>
+                        <span class="title-char">И</span>
+                        <span class="title-char">Р</span>
+                    </div>
+                    <div class="subtitle-container">
+                        <div class="subtitle-line">
+                            <span class="subtitle-char">В</span>
+                            <span class="subtitle-char">И</span>
+                            <span class="subtitle-char">Р</span>
+                            <span class="subtitle-char">У</span>
+                            <span class="subtitle-char">С</span>
+                            <span class="subtitle-char">Ы</span>
+                            <span class="subtitle-space"></span>
+                            <span class="subtitle-vs">
+                                <i class="fas fa-bolt"></i>
+                                <i class="fas fa-bolt"></i>
+                                <i class="fas fa-bolt"></i>
+                            </span>
+                            <span class="subtitle-space"></span>
+                            <span class="subtitle-char">Б</span>
+                            <span class="subtitle-char">А</span>
+                            <span class="subtitle-char">К</span>
+                            <span class="subtitle-char">Т</span>
+                            <span class="subtitle-char">Е</span>
+                            <span class="subtitle-char">Р</span>
+                            <span class="subtitle-char">И</span>
+                            <span class="subtitle-char">И</span>
+                        </div>
+                    </div>
+                    <div class="title-tagline">
+                        <div class="tagline-text">Биологическая битва в космическом микромире</div>
+                        <div class="tagline-underline"></div>
+                    </div>
+                </div>
+
+                <!-- Анимированные модели существ -->
+                <div class="menu-entities">
+                    <div class="entity-preview entity-virus" id="menu-virus">
+                        <div class="entity-core"></div>
+                        <div class="entity-spike spike-1"></div>
+                        <div class="entity-spike spike-2"></div>
+                        <div class="entity-spike spike-3"></div>
+                        <div class="entity-spike spike-4"></div>
+                        <div class="entity-spike spike-5"></div>
+                        <div class="entity-spike spike-6"></div>
+                        <div class="entity-glow"></div>
+                        <div class="entity-particles"></div>
+                    </div>
+                    <div class="entity-preview entity-bacteria" id="menu-bacteria">
+                        <div class="entity-core"></div>
+                        <div class="entity-flagella flagella-1"></div>
+                        <div class="entity-flagella flagella-2"></div>
+                        <div class="entity-flagella flagella-3"></div>
+                        <div class="entity-capsule"></div>
+                        <div class="entity-glow"></div>
+                        <div class="entity-particles"></div>
+                    </div>
+                </div>
+
+                <!-- Меню настроек -->
+                <div class="menu-settings">
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <i class="fas fa-music"></i>
+                            <span>Фоновая музыка</span>
+                        </div>
+                        <div class="settings-control">
+                            <label class="switch">
+                                <input type="checkbox" id="music-toggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <i class="fas fa-volume-up"></i>
+                            <span>Звуковые эффекты</span>
+                        </div>
+                        <div class="settings-control">
+                            <label class="switch">
+                                <input type="checkbox" id="sound-toggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Сложность</span>
+                        </div>
+                        <div class="settings-control">
+                            <select id="difficulty-select">
+                                <option value="easy">Лёгкая</option>
+                                <option value="medium" selected>Средняя</option>
+                                <option value="hard">Сложная</option>
+                                <option value="expert">Эксперт</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Основные кнопки меню -->
+                <div class="menu-buttons">
+                    <button class="menu-btn btn-start" id="start-btn">
+                        <div class="btn-content">
+                            <div class="btn-icon">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="btn-text">
+                                <div class="btn-title">НАЧАТЬ ИГРУ</div>
+                                <div class="btn-subtitle">Выберите сторону битвы</div>
+                            </div>
+                        </div>
+                        <div class="btn-glow"></div>
+                        <div class="btn-particles"></div>
+                    </button>
+
+                    <button class="menu-btn btn-how-to-play" id="how-to-play-btn">
+                        <div class="btn-content">
+                            <div class="btn-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div class="btn-text">
+                                <div class="btn-title">КАК ИГРАТЬ</div>
+                                <div class="btn-subtitle">Правила и механики</div>
+                            </div>
+                        </div>
+                        <div class="btn-glow"></div>
+                    </button>
+
+                    <button class="menu-btn btn-topics" id="topics-btn">
+                        <div class="btn-content">
+                            <div class="btn-icon">
+                                <i class="fas fa-book-medical"></i>
+                            </div>
+                            <div class="btn-text">
+                                <div class="btn-title">ТЕМЫ ВОПРОСОВ</div>
+                                <div class="btn-subtitle">Биология 6-11 классы</div>
+                            </div>
+                        </div>
+                        <div class="btn-glow"></div>
+                    </button>
+
+                    <button class="menu-btn btn-achievements" id="achievements-btn">
+                        <div class="btn-content">
+                            <div class="btn-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="btn-text">
+                                <div class="btn-title">ДОСТИЖЕНИЯ</div>
+                                <div class="btn-subtitle">Эволюционные ступени</div>
+                            </div>
+                        </div>
+                        <div class="btn-glow"></div>
+                    </button>
+
+                    <button class="menu-btn btn-about" id="about-btn">
+                        <div class="btn-content">
+                            <div class="btn-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="btn-text">
+                                <div class="btn-title">О ПРОЕКТЕ</div>
+                                <div class="btn-subtitle">Образовательная игра</div>
+                            </div>
+                        </div>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+
+                <!-- Футер меню -->
+                <div class="menu-footer">
+                    <div class="footer-text">
+                        <div class="footer-item">
+                            <i class="fas fa-microscope"></i>
+                            <span>Биологический симулятор</span>
+                        </div>
+                        <div class="footer-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Для школьников 6-11 классов</span>
+                        </div>
+                        <div class="footer-item">
+                            <i class="fas fa-code"></i>
+                            <span>Сделано с помощью HTML5, CSS3, JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link" id="github-link">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="#" class="footer-link" id="share-link">
+                            <i class="fas fa-share-alt"></i>
+                            <span>Поделиться</span>
+                        </a>
+                        <a href="#" class="footer-link" id="fullscreen-link">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Полный экран</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Индикатор загрузки -->
+            <div class="loading-indicator" id="menu-loading">
+                <div class="loading-text">Загрузка биологических данных...</div>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+                <div class="loading-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Вопросы:</span>
+                        <span class="stat-value" id="question-count">0/500</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Темы:</span>
+                        <span class="stat-value">6/6</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Эффекты:</span>
+                        <span class="stat-value">100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран выбора команды -->
+        <div class="screen" id="team-screen">
+            <div class="team-container">
+                <div class="team-header">
+                    <div class="team-title">
+                        <h1>ВЫБЕРИТЕ СТОРОНУ БИТВЫ</h1>
+                        <div class="team-subtitle">Ваш выбор определит стратегию и эволюционный путь</div>
+                    </div>
+                    <button class="btn-back" id="team-back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Вернуться</span>
+                    </button>
+                </div>
+
+                <div class="team-selection">
+                    <!-- Вирусы -->
+                    <div class="team-option team-virus" id="virus-team">
+                        <div class="team-card">
+                            <div class="team-card-header">
+                                <div class="team-icon">
+                                    <i class="fas fa-virus"></i>
+                                </div>
+                                <div class="team-name">
+                                    <h2>КОМАНДА ВИРУСОВ</h2>
+                                    <div class="team-tag">🦠 Захватчики клеток</div>
+                                </div>
+                            </div>
+                            
+                            <div class="team-model">
+                                <div class="team-entity" id="team-virus-model">
+                                    <div class="entity-core"></div>
+                                    <div class="entity-spike spike-1"></div>
+                                    <div class="entity-spike spike-2"></div>
+                                    <div class="entity-spike spike-3"></div>
+                                    <div class="entity-spike spike-4"></div>
+                                    <div class="entity-spike spike-5"></div>
+                                    <div class="entity-spike spike-6"></div>
+                                    <div class="entity-spike spike-7"></div>
+                                    <div class="entity-spike spike-8"></div>
+                                    <div class="entity-glow"></div>
+                                </div>
+                            </div>
+
+                            <div class="team-stats">
+                                <div class="stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-crosshairs"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Тип атаки</div>
+                                        <div class="stat-value">Заражающая</div>
+                                    </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Эволюция</div>
+                                        <div class="stat-value">Мутации формы</div>
+                                    </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Сложность</div>
+                                        <div class="stat-value">Высокая</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="team-description">
+                                <p>Вирусы - неклеточные формы жизни, способные проникать в клетки и использовать их механизмы для размножения.</p>
+                                <ul class="team-features">
+                                    <li><i class="fas fa-check"></i> Захват клеток-хозяев</li>
+                                    <li><i class="fas fa-check"></i> Быстрая мутация</li>
+                                    <li><i class="fas fa-check"></i> Специальные оболочки</li>
+                                    <li><i class="fas fa-check"></i> Эффект неожиданности</li>
+                                </ul>
+                            </div>
+
+                            <div class="team-evolution">
+                                <h3>Путь эволюции:</h3>
+                                <div class="evolution-stages">
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">1</div>
+                                        <div class="stage-name">Простой вирус</div>
+                                    </div>
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">2</div>
+                                        <div class="stage-name">Шипы атаки</div>
+                                    </div>
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">3</div>
+                                        <div class="stage-name">Двойная оболочка</div>
+                                    </div>
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">4</div>
+                                        <div class="stage-name">Стелс-режим</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn-select-team" data-team="virus">
+                                <div class="select-content">
+                                    <i class="fas fa-skull-crossbones"></i>
+                                    <span>ВЫБРАТЬ ВИРУСЫ</span>
+                                </div>
+                                <div class="select-glow"></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Бактерии -->
+                    <div class="team-option team-bacteria" id="bacteria-team">
+                        <div class="team-card">
+                            <div class="team-card-header">
+                                <div class="team-icon">
+                                    <i class="fas fa-bacterium"></i>
+                                </div>
+                                <div class="team-name">
+                                    <h2>КОМАНДА БАКТЕРИЙ</h2>
+                                    <div class="team-tag">🧫 Колониальные формы</div>
+                                </div>
+                            </div>
+                            
+                            <div class="team-model">
+                                <div class="team-entity" id="team-bacteria-model">
+                                    <div class="entity-core"></div>
+                                    <div class="entity-flagella flagella-1"></div>
+                                    <div class="entity-flagella flagella-2"></div>
+                                    <div class="entity-flagella flagella-3"></div>
+                                    <div class="entity-capsule"></div>
+                                    <div class="entity-glow"></div>
+                                </div>
+                            </div>
+
+                            <div class="team-stats">
+                                <div class="stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-fist-raised"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Тип атаки</div>
+                                        <div class="stat-value">Вытесняющая</div>
+                                    </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Эволюция</div>
+                                        <div class="stat-value">Колониальный рост</div>
+                                    </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Сложность</div>
+                                        <div class="stat-value">Средняя</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="team-description">
+                                <p>Бактерии - одноклеточные организмы, способные к быстрому делению и образованию колоний с высокой адаптивностью.</p>
+                                <ul class="team-features">
+                                    <li><i class="fas fa-check"></i> Быстрое деление</li>
+                                    <li><i class="fas fa-check"></i> Образование колоний</li>
+                                    <li><i class="fas fa-check"></i> Защитные капсулы</li>
+                                    <li><i class="fas fa-check"></i> Устойчивость к среде</li>
+                                </ul>
+                            </div>
+
+                            <div class="team-evolution">
+                                <h3>Путь эволюции:</h3>
+                                <div class="evolution-stages">
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">1</div>
+                                        <div class="stage-name">Простая бактерия</div>
+                                    </div>
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">2</div>
+                                        <div class="stage-name">Жгутики движения</div>
+                                    </div>
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">3</div>
+                                        <div class="stage-name">Защитная капсула</div>
+                                    </div>
+                                    <div class="evolution-stage">
+                                        <div class="stage-icon">4</div>
+                                        <div class="stage-name">Биоплёнка</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn-select-team" data-team="bacteria">
+                                <div class="select-content">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>ВЫБРАТЬ БАКТЕРИИ</span>
+                                </div>
+                                <div class="select-glow"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-footer">
+                    <div class="team-tip">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>Совет: Вирусы лучше подходят для агрессивной игры, бактерии - для стратегической обороны и роста</p>
+                    </div>
+                    <div class="team-random">
+                        <button class="btn-random" id="random-team-btn">
+                            <i class="fas fa-random"></i>
+                            <span>СЛУЧАЙНЫЙ ВЫБОР</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Игровой экран -->
+        <div class="screen" id="game-screen">
+            <!-- Верхняя панель игрового интерфейса -->
+            <div class="game-header">
+                <div class="game-score">
+                    <div class="score-item virus-score">
+                        <div class="score-label">
+                            <i class="fas fa-virus"></i>
+                            <span>ВИРУСЫ</span>
+                        </div>
+                        <div class="score-value" id="virus-score">0</div>
+                        <div class="score-progress">
+                            <div class="progress-bar" id="virus-progress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="score-vs">
+                        <div class="vs-icon">
+                            <i class="fas fa-biohazard"></i>
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="vs-text">ПРОТИВ</div>
+                    </div>
+                    
+                    <div class="score-item bacteria-score">
+                        <div class="score-label">
+                            <i class="fas fa-bacterium"></i>
+                            <span>БАКТЕРИИ</span>
+                        </div>
+                        <div class="score-value" id="bacteria-score">0</div>
+                        <div class="score-progress">
+                            <div class="progress-bar" id="bacteria-progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-info">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">ВРЕМЯ</div>
+                            <div class="info-value" id="game-timer">60</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">РАУНД</div>
+                            <div class="info-value" id="game-round">1</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">КОМБО</div>
+                            <div class="info-value" id="game-combo">0</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">ЭВОЛЮЦИЯ</div>
+                            <div class="info-value" id="evolution-level">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-game-menu" id="game-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Основная игровая область -->
+            <div class="game-main">
+                <!-- Область существ -->
+                <div class="entities-area">
+                    <div class="entity-container virus-container">
+                        <div class="entity-display" id="virus-entity">
+                            <div class="entity-core"></div>
+                            <div class="entity-spike spike-1"></div>
+                            <div class="entity-spike spike-2"></div>
+                            <div class="entity-spike spike-3"></div>
+                            <div class="entity-spike spike-4"></div>
+                            <div class="entity-spike spike-5"></div>
+                            <div class="entity-spike spike-6"></div>
+                            <div class="entity-membrane"></div>
+                            <div class="entity-glow"></div>
+                        </div>
+                        <div class="entity-name">
+                            <i class="fas fa-virus"></i>
+                            <span>ВИРУСНАЯ КОЛОНИЯ</span>
+                        </div>
+                        <div class="entity-stats">
+                            <div class="entity-stat">
+                                <div class="stat-name">Размер</div>
+                                <div class="stat-value">1.2µm</div>
+                            </div>
+                            <div class="entity-stat">
+                                <div class="stat-name">Агрессия</div>
+                                <div class="stat-value">85%</div>
+                            </div>
+                            <div class="entity-stat">
+                                <div class="stat-name">Мутации</div>
+                                <div class="stat-value">3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="battle-zone">
+                        <div class="battle-effects" id="battle-effects"></div>
+                        <div class="battle-center">
+                            <div class="center-circle"></div>
+                            <div class="center-text">МИКРОМИР</div>
+                            <div class="center-particles"></div>
+                        </div>
+                    </div>
+
+                    <div class="entity-container bacteria-container">
+                        <div class="entity-display" id="bacteria-entity">
+                            <div class="entity-core"></div>
+                            <div class="entity-flagella flagella-1"></div>
+                            <div class="entity-flagella flagella-2"></div>
+                            <div class="entity-flagella flagella-3"></div>
+                            <div class="entity-capsule"></div>
+                            <div class="entity-glow"></div>
+                        </div>
+                        <div class="entity-name">
+                            <i class="fas fa-bacterium"></i>
+                            <span>БАКТЕРИАЛЬНАЯ КОЛОНИЯ</span>
+                        </div>
+                        <div class="entity-stats">
+                            <div class="entity-stat">
+                                <div class="stat-name">Размер</div>
+                                <div class="stat-value">2.5µm</div>
+                            </div>
+                            <div class="entity-stat">
+                                <div class="stat-name">Защита</div>
+                                <div class="stat-value">90%</div>
+                            </div>
+                            <div class="entity-stat">
+                                <div class="stat-name">Деление</div>
+                                <div class="stat-value">2.4x</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Область с вопросами -->
+                <div class="questions-area">
+                    <div class="question-container" id="virus-question-container">
+                        <div class="question-header">
+                            <div class="question-team">
+                                <i class="fas fa-virus"></i>
+                                <span>ВОПРОС ДЛЯ ВИРУСОВ</span>
+                            </div>
+                            <div class="question-timer" id="virus-timer">
+                                <div class="timer-circle">
+                                    <svg class="timer-svg" viewBox="0 0 36 36">
+                                        <path class="timer-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                        <path class="timer-circle-fg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    </svg>
+                                    <div class="timer-value">15</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-content">
+                            <div class="question-text" id="virus-question-text">
+                                Какой органоид клетки отвечает за синтез белков?
+                            </div>
+                            <div class="question-answers">
+                                <button class="answer-option" data-index="0">
+                                    <div class="answer-letter">A</div>
+                                    <div class="answer-text" id="virus-answer-0">Митохондрия</div>
+                                </button>
+                                <button class="answer-option" data-index="1">
+                                    <div class="answer-letter">B</div>
+                                    <div class="answer-text" id="virus-answer-1">Рибосома</div>
+                                </button>
+                                <button class="answer-option" data-index="2">
+                                    <div class="answer-letter">C</div>
+                                    <div class="answer-text" id="virus-answer-2">Комплекс Гольджи</div>
+                                </button>
+                                <button class="answer-option" data-index="3">
+                                    <div class="answer-letter">D</div>
+                                    <div class="answer-text" id="virus-answer-3">Эндоплазматическая сеть</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-container" id="bacteria-question-container">
+                        <div class="question-header">
+                            <div class="question-team">
+                                <i class="fas fa-bacterium"></i>
+                                <span>ВОПРОС ДЛЯ БАКТЕРИЙ</span>
+                            </div>
+                            <div class="question-timer" id="bacteria-timer">
+                                <div class="timer-circle">
+                                    <svg class="timer-svg" viewBox="0 0 36 36">
+                                        <path class="timer-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                        <path class="timer-circle-fg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    </svg>
+                                    <div class="timer-value">15</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-content">
+                            <div class="question-text" id="bacteria-question-text">
+                                Какой процесс обеспечивает бактериям движение?
+                            </div>
+                            <div class="question-answers">
+                                <button class="answer-option" data-index="0">
+                                    <div class="answer-letter">A</div>
+                                    <div class="answer-text" id="bacteria-answer-0">Бинарное деление</div>
+                                </button>
+                                <button class="answer-option" data-index="1">
+                                    <div class="answer-letter">B</div>
+                                    <div class="answer-text" id="bacteria-answer-1">Работа жгутиков</div>
+                                </button>
+                                <button class="answer-option" data-index="2">
+                                    <div class="answer-letter">C</div>
+                                    <div class="answer-text" id="bacteria-answer-2">Секреция слизи</div>
+                                </button>
+                                <button class="answer-option" data-index="3">
+                                    <div class="answer-letter">D</div>
+                                    <div class="answer-text" id="bacteria-answer-3">Пиноцитоз</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Нижняя панель с информацией -->
+            <div class="game-footer">
+                <div class="player-info">
+                    <div class="player-team">
+                        <div class="player-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Игрок: <span id="player-name">Биолог-исследователь</span></div>
+                            <div class="player-side">Сторона: <span id="player-side">Наблюдатель</span></div>
+                        </div>
+                    </div>
+                    <div class="player-stats">
+                        <div class="player-stat">
+                            <div class="stat-name">Правильно</div>
+                            <div class="stat-value" id="correct-answers">0</div>
+                        </div>
+                        <div class="player-stat">
+                            <div class="stat-name">Точность</div>
+                            <div class="stat-value" id="accuracy-rate">0%</div>
+                        </div>
+                        <div class="player-stat">
+                            <div class="stat-name">Рекорд</div>
+                            <div class="stat-value" id="player-record">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-controls">
+                    <button class="control-btn btn-pause" id="pause-btn">
+                        <i class="fas fa-pause"></i>
+                        <span>Пауза</span>
+                    </button>
+                    <button class="control-btn btn-hint" id="hint-btn">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Подсказка</span>
+                        <div class="hint-counter">3</div>
+                    </button>
+                    <button class="control-btn btn-evolution" id="evolution-btn">
+                        <i class="fas fa-dna"></i>
+                        <span>Эволюция</span>
+                    </button>
+                    <button class="control-btn btn-attack" id="attack-btn">
+                        <i class="fas fa-biohazard"></i>
+                        <span>Атака</span>
+                    </button>
+                </div>
+
+                <div class="topic-indicator">
+                    <div class="topic-label">Текущая тема:</div>
+                    <div class="topic-tags">
+                        <span class="topic-tag active" data-topic="cell">Клетка</span>
+                        <span class="topic-tag" data-topic="genetics">Генетика</span>
+                        <span class="topic-tag" data-topic="evolution">Эволюция</span>
+                        <span class="topic-tag" data-topic="ecology">Экология</span>
+                        <span class="topic-tag" data-topic="anatomy">Анатомия</span>
+                        <span class="topic-tag" data-topic="microbiology">Микробиология</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Эффекты эволюции -->
+            <div class="evolution-effects" id="evolution-effects">
+                <div class="evolution-notification" id="virus-evolution">
+                    <div class="evo-content">
+                        <div class="evo-icon">
+                            <i class="fas fa-virus"></i>
+                        </div>
+                        <div class="evo-text">
+                            <div class="evo-title">ЭВОЛЮЦИЯ ВИРУСОВ!</div>
+                            <div class="evo-desc">Появились шипы атаки</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="evolution-notification" id="bacteria-evolution">
+                    <div class="evo-content">
+                        <div class="evo-icon">
+                            <i class="fas fa-bacterium"></i>
+                        </div>
+                        <div class="evo-text">
+                            <div class="evo-title">ЭВОЛЮЦИЯ БАКТЕРИЙ!</div>
+                            <div class="evo-desc">Образована защитная капсула</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Эффекты комбо -->
+            <div class="combo-effects" id="combo-effects">
+                <div class="combo-notification">
+                    <div class="combo-text">КОМБО x<span id="combo-count">3</span>!</div>
+                    <div class="combo-fireworks"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран паузы -->
+        <div class="overlay-screen" id="pause-screen">
+            <div class="overlay-content">
+                <div class="overlay-header">
+                    <h2>ИГРА НА ПАУЗЕ</h2>
+                    <div class="overlay-subtitle">Микромир замер в ожидании</div>
+                </div>
+                
+                <div class="pause-stats">
+                    <div class="pause-stat">
+                        <div class="pause-stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="pause-stat-content">
+                            <div class="pause-stat-label">Время игры</div>
+                            <div class="pause-stat-value" id="pause-time">00:00</div>
+                        </div>
+                    </div>
+                    <div class="pause-stat">
+                        <div class="pause-stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="pause-stat-content">
+                            <div class="pause-stat-label">Правильных ответов</div>
+                            <div class="pause-stat-value" id="pause-correct">0</div>
+                        </div>
+                    </div>
+                    <div class="pause-stat">
+                        <div class="pause-stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="pause-stat-content">
+                            <div class="pause-stat-label">Максимальное комбо</div>
+                            <div class="pause-stat-value" id="pause-combo">0</div>
+                        </div>
+                    </div>
+                    <div class="pause-stat">
+                        <div class="pause-stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="pause-stat-content">
+                            <div class="pause-stat-label">Точность</div>
+                            <div class="pause-stat-value" id="pause-accuracy">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pause-buttons">
+                    <button class="pause-btn btn-resume" id="resume-btn">
+                        <i class="fas fa-play"></i>
+                        <span>ПРОДОЛЖИТЬ</span>
+                    </button>
+                    <button class="pause-btn btn-restart" id="restart-btn">
+                        <i class="fas fa-redo"></i>
+                        <span>НАЧАТЬ ЗАНОВО</span>
+                    </button>
+                    <button class="pause-btn btn-settings" id="pause-settings-btn">
+                        <i class="fas fa-cog"></i>
+                        <span>НАСТРОЙКИ</span>
+                    </button>
+                    <button class="pause-btn btn-menu" id="pause-menu-btn">
+                        <i class="fas fa-home"></i>
+                        <span>В ГЛАВНОЕ МЕНЮ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран результатов -->
+        <div class="screen" id="result-screen">
+            <div class="result-container">
+                <div class="result-header" id="result-header">
+                    <div class="result-title">ПОБЕДА ВИРУСОВ!</div>
+                    <div class="result-subtitle">Клеточный мир захвачен</div>
+                    <div class="result-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+
+                <div class="result-content">
+                    <div class="result-stats">
+                        <div class="result-stat">
+                            <div class="result-stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="result-stat-info">
+                                <div class="result-stat-label">РЕЗУЛЬТАТ</div>
+                                <div class="result-stat-value" id="final-score">850</div>
+                            </div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="result-stat-info">
+                                <div class="result-stat-label">ВРЕМЯ ИГРЫ</div>
+                                <div class="result-stat-value" id="final-time">2:45</div>
+                            </div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="result-stat-info">
+                                <div class="result-stat-label">ПРАВИЛЬНЫХ ОТВЕТОВ</div>
+                                <div class="result-stat-value" id="final-correct">12/15</div>
+                            </div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="result-stat-info">
+                                <div class="result-stat-label">МАКСИМАЛЬНОЕ КОМБО</div>
+                                <div class="result-stat-value" id="final-combo">5</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-evolution">
+                        <h3>Достигнутая эволюция:</h3>
+                        <div class="evolution-progress">
+                            <div class="evolution-stage achieved">
+                                <div class="stage-icon">1</div>
+                                <div class="stage-name">Базовая форма</div>
+                            </div>
+                            <div class="evolution-stage achieved">
+                                <div class="stage-icon">2</div>
+                                <div class="stage-name">Первые мутации</div>
+                            </div>
+                            <div class="evolution-stage achieved">
+                                <div class="stage-icon">3</div>
+                                <div class="stage-name">Специализация</div>
+                            </div>
+                            <div class="evolution-stage">
+                                <div class="stage-icon">4</div>
+                                <div class="stage-name">Совершенная форма</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-quote">
+                        <div class="quote-text">"Эволюция выбирает сильнейших"</div>
+                        <div class="quote-author">— Законы микромира</div>
+                    </div>
+                </div>
+
+                <div class="result-buttons">
+                    <button class="result-btn btn-again" id="play-again-btn">
+                        <i class="fas fa-redo"></i>
+                        <span>ИГРАТЬ СНОВА</span>
+                    </button>
+                    <button class="result-btn btn-share" id="share-result-btn">
+                        <i class="fas fa-share-alt"></i>
+                        <span>ПОДЕЛИТЬСЯ</span>
+                    </button>
+                    <button class="result-btn btn-menu" id="result-menu-btn">
+                        <i class="fas fa-home"></i>
+                        <span>В МЕНЮ</span>
+                    </button>
+                </div>
+
+                <div class="result-footer">
+                    <div class="result-tip">
+                        <i class="fas fa-star"></i>
+                        <span>Совершенствуйтесь! Попробуйте другую команду для нового опыта.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран "Как играть" -->
+        <div class="overlay-screen" id="how-to-play-screen">
+            <div class="overlay-content tutorial-content">
+                <div class="overlay-header">
+                    <h2>КАК ИГРАТЬ</h2>
+                    <div class="overlay-subtitle">Механики битвы в микромире</div>
+                    <button class="btn-close-overlay" id="close-tutorial-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Выберите сторону</h3>
+                            <p>Станьте на сторону <strong>Вирусов</strong> или <strong>Бактерий</strong>. Каждая команда имеет уникальные способности и стратегию эволюции.</p>
+                            <div class="step-visual">
+                                <div class="visual-entity virus-small"></div>
+                                <div class="visual-vs">VS</div>
+                                <div class="visual-entity bacteria-small"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Отвечайте на вопросы</h3>
+                            <p>Каждой команде задаётся свой вопрос одновременно. Отвечайте правильно, чтобы ваше существо эволюционировало и атаковало противника.</p>
+                            <div class="step-visual">
+                                <div class="visual-question">
+                                    <div class="question-example">
+                                        <div class="question-text-ex">Какой органоид называют "энергетической станцией" клетки?</div>
+                                        <div class="answers-ex">
+                                            <div class="answer-ex correct">Митохондрия</div>
+                                            <div class="answer-ex">Рибосома</div>
+                                            <div class="answer-ex">Ядро</div>
+                                            <div class="answer-ex">Лизосома</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Эволюционируйте</h3>
+                            <p>За каждые 5 правильных ответов ваше существо получает эволюционный уровень: вирусы развивают шипы и оболочки, бактерии - жгутики и капсулы.</p>
+                            <div class="step-visual">
+                                <div class="evolution-visual">
+                                    <div class="evo-stage">1 →</div>
+                                    <div class="evo-stage">2 →</div>
+                                    <div class="evo-stage">3 →</div>
+                                    <div class="evo-stage">4</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Атакуйте противника</h3>
+                            <p>Правильные ответы усиливают вашу атаку: вирусы заражают клетки, бактерии делятся и вытесняют. Неправильные ответы ослабляют ваше существо.</p>
+                            <div class="step-visual">
+                                <div class="attack-visual">
+                                    <div class="attack-icon virus-attack">
+                                        <i class="fas fa-virus"></i>
+                                        <div class="attack-arrow">→</div>
+                                    </div>
+                                    <div class="attack-icon bacteria-attack">
+                                        <i class="fas fa-bacterium"></i>
+                                        <div class="attack-arrow">←</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>Достигайте победы</h3>
+                            <p>Полностью захватите микромир, набрав больше очков чем противник за отведённое время или уничтожив его существо.</p>
+                            <div class="step-visual">
+                                <div class="victory-visual">
+                                    <div class="victory-text">ПОБЕДА!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-tips">
+                    <h3>Советы для победы:</h3>
+                    <ul class="tips-list">
+                        <li><i class="fas fa-lightbulb"></i> <strong>Комбо-серии</strong> дают бонусы - старайтесь отвечать правильно подряд</li>
+                        <li><i class="fas fa-lightbulb"></i> <strong>Внимание к таймеру</strong> - у вас есть 15 секунд на каждый вопрос</li>
+                        <li><i class="fas fa-lightbulb"></i> <strong>Используйте подсказки</strong> в сложных ситуациях (доступно 3 за игру)</li>
+                        <li><i class="fas fa-lightbulb"></i> <strong>Следите за эволюцией</strong> - каждое существо визуально меняется</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-buttons">
+                    <button class="tutorial-btn btn-start-tutorial" id="start-after-tutorial">
+                        <i class="fas fa-rocket"></i>
+                        <span>НАЧАТЬ ИГРУ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран "Темы вопросов" -->
+        <div class="overlay-screen" id="topics-screen">
+            <div class="overlay-content topics-content">
+                <div class="overlay-header">
+                    <h2>ТЕМЫ ВОПРОСОВ</h2>
+                    <div class="overlay-subtitle">Школьная программа по биологии 6-11 классы</div>
+                    <button class="btn-close-overlay" id="close-topics-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="topics-grid">
+                    <div class="topic-card" data-topic="cell">
+                        <div class="topic-icon">
+                            <i class="fas fa-cell"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Клетка и органоиды</h3>
+                            <p>Строение клетки, функции органелл, деление клетки, обмен веществ.</p>
+                            <div class="topic-stats">
+                                <span class="stat"><i class="fas fa-question"></i> 85 вопросов</span>
+                                <span class="stat"><i class="fas fa-graduation-cap"></i> 7-11 класс</span>
+                            </div>
+                        </div>
+                        <div class="topic-glow"></div>
+                    </div>
+
+                    <div class="topic-card" data-topic="genetics">
+                        <div class="topic-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Генетика</h3>
+                            <p>Наследственность, изменчивость, ДНК, РНК, мутации, законы Менделя.</p>
+                            <div class="topic-stats">
+                                <span class="stat"><i class="fas fa-question"></i> 72 вопроса</span>
+                                <span class="stat"><i class="fas fa-graduation-cap"></i> 9-11 класс</span>
+                            </div>
+                        </div>
+                        <div class="topic-glow"></div>
+                    </div>
+
+                    <div class="topic-card" data-topic="evolution">
+                        <div class="topic-icon">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Эволюция</h3>
+                            <p>Теории эволюции, естественный отбор, видообразование, доказательства эволюции.</p>
+                            <div class="topic-stats">
+                                <span class="stat"><i class="fas fa-question"></i> 68 вопросов</span>
+                                <span class="stat"><i class="fas fa-graduation-cap"></i> 9-11 класс</span>
+                            </div>
+                        </div>
+                        <div class="topic-glow"></div>
+                    </div>
+
+                    <div class="topic-card" data-topic="ecology">
+                        <div class="topic-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Экология</h3>
+                            <p>Экосистемы, цепи питания, круговороты веществ, биоценозы, охрана природы.</p>
+                            <div class="topic-stats">
+                                <span class="stat"><i class="fas fa-question"></i> 63 вопроса</span>
+                                <span class="stat"><i class="fas fa-graduation-cap"></i> 6-11 класс</span>
+                            </div>
+                        </div>
+                        <div class="topic-glow"></div>
+                    </div>
+
+                    <div class="topic-card" data-topic="anatomy">
+                        <div class="topic-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Анатомия человека</h3>
+                            <p>Системы органов, строение и функции, физиологические процессы, здоровье.</p>
+                            <div class="topic-stats">
+                                <span class="stat"><i class="fas fa-question"></i> 91 вопрос</span>
+                                <span class="stat"><i class="fas fa-graduation-cap"></i> 8-11 класс</span>
+                            </div>
+                        </div>
+                        <div class="topic-glow"></div>
+                    </div>
+
+                    <div class="topic-card" data-topic="microbiology">
+                        <div class="topic-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Микроорганизмы</h3>
+                            <p>Вирусы, бактерии, грибы, простейшие, их строение, значение, заболевания.</p>
+                            <div class="topic-stats">
+                                <span class="stat"><i class="fas fa-question"></i> 58 вопросов</span>
+                                <span class="stat"><i class="fas fa-graduation-cap"></i> 6-11 класс</span>
+                            </div>
+                        </div>
+                        <div class="topic-glow"></div>
+                    </div>
+                </div>
+
+                <div class="topics-info">
+                    <div class="info-box">
+                        <h4><i class="fas fa-database"></i> База вопросов</h4>
+                        <p>Всего в игре <strong>437 вопросов</strong>, охватывающих полный курс школьной биологии. Вопросы регулярно обновляются и дополняются.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-brain"></i> Адаптивная сложность</h4>
+                        <p>Система подбирает вопросы в зависимости от вашего уровня: чем лучше вы отвечаете, тем сложнее становятся вопросы.</p>
+                    </div>
+                </div>
+
+                <div class="topics-buttons">
+                    <button class="topics-btn btn-back" id="topics-back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>ВЕРНУТЬСЯ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран "О проекте" -->
+        <div class="overlay-screen" id="about-screen">
+            <div class="overlay-content about-content">
+                <div class="overlay-header">
+                    <h2>О ПРОЕКТЕ</h2>
+                    <div class="overlay-subtitle">Образовательная игра по биологии</div>
+                    <button class="btn-close-overlay" id="close-about-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="about-main">
+                    <div class="about-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-microscope"></i>
+                            <i class="fas fa-virus"></i>
+                            <i class="fas fa-bacterium"></i>
+                        </div>
+                        <div class="logo-text">
+                            <div class="logo-title">МИКРОМИР</div>
+                            <div class="logo-subtitle">Вирусы vs Бактерии</div>
+                        </div>
+                    </div>
+
+                    <div class="about-description">
+                        <p><strong>"Микромир: Вирусы против Бактерий"</strong> - это интерактивная образовательная игра, созданная для изучения биологии в увлекательной форме.</p>
+                        <p>Проект сочетает в себе элементы научного симулятора, викторины и стратегической игры, позволяя игрокам погрузиться в удивительный мир микроорганизмов.</p>
+                    </div>
+
+                    <div class="about-features">
+                        <h3>Ключевые особенности:</h3>
+                        <div class="features-grid">
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>Образовательный контент</h4>
+                                    <p>Полное соответствие школьной программе по биологии 6-11 классов</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-gamepad"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>Игровая механика</h4>
+                                    <p>Уникальная система эволюции существ в зависимости от правильных ответов</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>Визуальные эффекты</h4>
+                                    <p>Космический стиль с анимациями частиц и динамическим освещением</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>Кросс-платформенность</h4>
+                                    <p>Полная поддержка мобильных устройств, планшетов и сенсорных экранов</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-tech">
+                        <h3>Технологии:</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <div class="tech-icon html">HTML5</div>
+                                <div class="tech-desc">Семантическая разметка</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon css">CSS3</div>
+                                <div class="tech-desc">Анимации и 3D-эффекты</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon js">JavaScript</div>
+                                <div class="tech-desc">Интерактивная логика</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon api">Web Audio API</div>
+                                <div class="tech-desc">Звуковое сопровождение</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-links">
+                        <h3>Ссылки и контакты:</h3>
+                        <div class="links-grid">
+                            <a href="#" class="about-link" id="github-about-link">
+                                <i class="fab fa-github"></i>
+                                <span>Исходный код на GitHub</span>
+                            </a>
+                            <a href="#" class="about-link" id="issues-link">
+                                <i class="fas fa-bug"></i>
+                                <span>Сообщить об ошибке</span>
+                            </a>
+                            <a href="#" class="about-link" id="suggest-link">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Предложить улучшение</span>
+                            </a>
+                            <a href="#" class="about-link" id="contact-link">
+                                <i class="fas fa-envelope"></i>
+                                <span>Обратная связь</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-footer">
+                    <div class="footer-credits">
+                        <p> Микромир: Вирусы vs Бактерии. Образовательный проект по биологии.</p>
+                        <p>Все вопросы составлены на основе учебных материалов по биологии для 6-11 классов.</p>
+                    </div>
+                    <button class="about-btn btn-back" id="about-back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>ВЕРНУТЬСЯ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Системные уведомления -->
+    <div class="notification-container" id="notification-container">
+        <!-- Уведомления будут добавляться динамически -->
+    </div>
+
+    <!-- Мобильное меню (только для мобильных) -->
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="mobile-menu-btn" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="mobile-menu-content" id="mobile-menu-content">
+            <button class="mobile-menu-item" data-action="home">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </button>
+            <button class="mobile-menu-item" data-action="restart">
+                <i class="fas fa-redo"></i>
+                <span>Заново</span>
+            </button>
+            <button class="mobile-menu-item" data-action="sound">
+                <i class="fas fa-volume-up"></i>
+                <span>Звук</span>
+            </button>
+            <button class="mobile-menu-item" data-action="fullscreen">
+                <i class="fas fa-expand-alt"></i>
+                <span>Полный экран</span>
+            </button>
+            <button class="mobile-menu-item" data-action="help">
+                <i class="fas fa-question-circle"></i>
+                <span>Помощь</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Индикатор загрузки для мобильных -->
+    <div class="mobile-loading" id="mobile-loading">
+        <div class="loading-spinner">
+            <div class="spinner-circle"></div>
+            <div class="spinner-text">Загрузка...</div>
+        </div>
+    </div>
+
+    <script src="biology.js"></script>
+    <script>
+        // Инициализация базовых функций для предотвращения ошибок до загрузки основного скрипта
+        document.addEventListener('DOMContentLoaded', function() {
+            // Предотвращение контекстного меню на мобильных
+            document.addEventListener('contextmenu', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                }
+            });
+            
+            // Предотвращение масштабирования на мобильных при двойном тапе
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+            
+            // Установка правильной высоты для мобильных
+            function setMobileHeight() {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+            
+            setMobileHeight();
+            window.addEventListener('resize', setMobileHeight);
+            window.addEventListener('orientationchange', setMobileHeight);
+            
+            // Показать, что страница загружена
+            setTimeout(function() {
+                document.getElementById('menu-loading').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('menu-loading').style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+        
+        // Добавление классов для обнаружения мобильных устройств
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.body.classList.add('mobile-device');
+        }
+        
+        if ('ontouchstart' in window || navigator.maxTouchPoints) {
+            document.body.classList.add('touch-device');
+        }
+        
+        // Определение поддержки WebGL для эффектов
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (gl && gl instanceof WebGLRenderingContext) {
+            document.body.classList.add('webgl-supported');
+        } else {
+            document.body.classList.add('webgl-not-supported');
+        }
+    </script>
+</body>
+</html>
